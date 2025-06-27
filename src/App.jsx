@@ -1,5 +1,10 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react'
 import './Portfoliotheme.css'
+
+import anime from 'animejs/lib/anime.es.js';
+
+
+
 
 const SECTIONS = [
   { id: 'hero' },
@@ -8,94 +13,127 @@ const SECTIONS = [
   { id: 'contact' },
 ];
 
+
 function VerticalLine() {
-  const heroLineRef = useRef(null);
-  const heroDotRef = useRef(null);
-  const fullLineRef = useRef(null);
-  const dotRefs = useRef([]);
+  const heroLineRef = useRef(null)
+  const heroDotRef = useRef(null)
+  const fullLineRef = useRef(null)
+  const dotRefs = useRef([])
+  const topFillRef = useRef(null);
+
 
   useEffect(() => {
-    const updatePositions = () => {
-      const heroSection = document.getElementById('hero');
-      if (!heroSection || !heroLineRef.current || !heroDotRef.current || !fullLineRef.current) return;
+    // grab the positions once up front
+    const heroEl = document.getElementById('hero')
+    const contactEl = document.getElementById('contact')
+    if (!heroEl || !contactEl) return
 
-      const heroRect = heroSection.getBoundingClientRect();
-      const heroTop = heroRect.top + window.scrollY;
-      const heroBottom = heroTop + heroRect.height;
-      const heroCenter = heroTop + heroRect.height / 2;
+    const heroRect = heroEl.getBoundingClientRect()
+    const heroTop = heroRect.top + window.scrollY
+    const heroCenterY = heroTop + heroRect.height / 2
+    const heroHalfH = heroRect.height / 2
 
-      // Hero section line - from bottom to center
-      heroLineRef.current.style.top = `${heroCenter}px`;
-      heroLineRef.current.style.height = `${heroRect.height / 2}px`;
+    const contactRect = contactEl.getBoundingClientRect()
+    const contactBottom = contactRect.top + window.scrollY + contactRect.height
 
-      // Hero dot at center
-      heroDotRef.current.style.top = `${heroCenter}px`;
+    const sectionCenters = SECTIONS.slice(1).map(sec => {
+      const el = document.getElementById(sec.id)
+      if (!el) return;
+      const r = el.getBoundingClientRect();
 
-      // Full line for other sections - from hero bottom to end of page
-      const lastSection = document.getElementById('contact');
-      if (lastSection) {
-        const lastRect = lastSection.getBoundingClientRect();
-        const lastBottom = lastRect.top + window.scrollY + lastRect.height;
-        
-        fullLineRef.current.style.top = `${heroBottom}px`;
-        fullLineRef.current.style.height = `${lastBottom - heroBottom}px`;
-      }
+      return r.top + window.scrollY + r.height / 2
+    })
 
-      // Position dots for other sections
-      SECTIONS.slice(1).forEach((section, index) => {
-        const element = document.getElementById(section.id);
-        const dot = dotRefs.current[index];
-        if (element && dot) {
-          const rect = element.getBoundingClientRect();
-          const center = rect.top + window.scrollY + rect.height / 2;
-          dot.style.top = `${center}px`;
-        }
-      });
+    // ✅ Set dot position statically before animation
+  if (heroDotRef.current) {
+    heroDotRef.current.style.top = `${heroCenterY}px`;
+  }
+
+    // Build an Anime.js timeline
+    const tl = anime.timeline({
+      autoplay: true,
+      easing: 'cubicBezier(0.4,0,0.2,1)',
+      delay: 100
+    })
+
+    // 1) Hero line grows from bottom → center
+    tl.add({
+      targets: heroLineRef.current,
+      top: [`${heroTop + heroRect.height}px`, `${heroCenterY}px`],
+      height: [0, `${heroHalfH}px`],
+      duration: 2000,
+    })
+
+      // 2) Hero dot appears (fade in + scale)
+      .add({
+        targets: heroDotRef.current,
+        opacity: [0, 1],      // fade in
+        scale: [0.6, 1],      // smooth scale-up
+        duration: 400,
+        easing: 'easeOutQuad'
+      }, '+=0')
+      
+
+      // 3) Full line grows from hero bottom → contact bottom
+      .add({
+        targets: fullLineRef.current,
+        top: [`${heroTop + heroRect.height}px`, `${heroTop + heroRect.height}px`],
+        height: [0, `${contactBottom - (heroTop + heroRect.height)}px`],
+        duration: 1500,
+      }, '+=200')
+
+      // 4) Section dots slide in
+      .add({
+        targets: dotRefs.current,
+        top: sectionCenters,
+        opacity: [0, 0.8],
+        duration: 600,
+        delay: anime.stagger(150),
+      }, '-=800')
+
+
+    // clean‐up on unmount
+    return () => tl.pause()
+  }, [])
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const hero = document.getElementById('hero');
+      if (!hero || !topFillRef.current) return;
+
+      const rect = hero.getBoundingClientRect();
+      const scrollPast = -rect.top; // how far we've scrolled past top
+
+      const maxHeight = rect.height / 2; // match hero's half height
+      const fillHeight = Math.min(Math.max(scrollPast, 0), maxHeight);
+
+      topFillRef.current.style.height = `${fillHeight}px`;
     };
 
-    // Initial positioning
-    setTimeout(updatePositions, 100);
-    
-    window.addEventListener('resize', updatePositions);
-    window.addEventListener('scroll', updatePositions);
-    
-    return () => {
-      window.removeEventListener('resize', updatePositions);
-      window.removeEventListener('scroll', updatePositions);
-    };
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // initial fill on mount
+
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
     <div className="vertical-line-container">
-      {/* Hero section animated line */}
-      <div 
-        ref={heroLineRef}
-        className="hero-vertical-line"
-      />
-      
-      {/* Hero section dot */}
-      <div 
-        ref={heroDotRef}
-        className="hero-vertical-dot"
-      />
-      
-      {/* Full line for other sections */}
-      <div 
-        ref={fullLineRef}
-        className="full-vertical-line"
-      />
-      
-      {/* Dots for other sections */}
-      {SECTIONS.slice(1).map((section, index) => (
+      <div ref={heroLineRef} className="hero-vertical-line" />
+      <div ref={heroDotRef} className="hero-vertical-dot" />
+      <div ref={fullLineRef} className="full-vertical-line" />
+      {/* ✅ New top-filler line */}
+      <div ref={topFillRef} className="top-fill-line" />
+      {SECTIONS.slice(1).map((sec, i) => (
         <div
-          key={`dot-${section.id}`}
-          ref={el => (dotRefs.current[index] = el)}
+          key={sec.id}
+          ref={el => (dotRefs.current[i] = el || null)}
           className="section-vertical-dot"
         />
       ))}
     </div>
-  );
+  )
 }
+
 
 function HeroSection() {
   return (
@@ -185,8 +223,8 @@ function App() {
       <AboutSection />
       <ProjectsSection />
       <ContactSection />
-      
-      
+
+
     </div>
   );
 }
