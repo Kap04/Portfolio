@@ -1,0 +1,298 @@
+/* PortfolioTheme.css */
+
+/*─────────────────────────────────────────*/
+/* 1) Root variables & global resets      */
+/*─────────────────────────────────────────*/
+:root {
+  /* Colors */
+  --background: #000;
+  --accent: #00FF41;
+  --text: #fff;
+  --text-secondary: #888;
+  --shapes: #444;
+
+  /* Typography */
+  --font-main: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+
+  /* Layout */
+  --line-offset: 3.5rem;     /* Horizontal offset for timeline */
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--background);
+  color: var(--text);
+  font-family: var(--font-main);
+  scroll-behavior: smooth;
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+/*─────────────────────────────────────────*/
+/* 2) Navigation                         */
+/*─────────────────────────────────────────*/
+.main-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 3.5rem;
+  background: rgba(0,0,0,0.95);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 2rem;
+  border-bottom: 1px solid var(--shapes);
+  z-index: 100;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: var(--accent);
+}
+
+/*─────────────────────────────────────────*/
+/* 3) Sections (Hero, About, Projects, Contact) */
+/*─────────────────────────────────────────*/
+section {
+  width: 100vw;
+  height: 100vh;
+  padding-left: 7rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-section {
+  align-items: flex-start;
+  padding-left: 0;
+}
+
+.hero-content {
+  margin-left: 6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.whoami {
+  font-size: 1.1rem;
+  color: var(--accent);
+  opacity: 0;
+  animation: fade-in 1s 0.5s forwards;
+}
+
+.hero-name {
+  font-size: 2.2rem;
+  font-weight: 700;
+  opacity: 0;
+  animation: fade-in 1s 1s forwards;
+}
+
+.hero-subtitle {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  opacity: 0;
+  animation: fade-in 1s 1.5s forwards;
+}
+
+@keyframes fade-in {
+  to { opacity: 1; }
+}
+
+.about-section em {
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+}
+
+.about-text {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  max-width: 500px;
+  margin-top: 1rem;
+}
+
+.resume-link {
+  margin-top: 1rem;
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.projects-section,
+.contact-section {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.project-card {
+  background: rgba(34,34,34,0.7);
+  border-radius: 1rem;
+  padding: 2rem 3rem;
+  margin-top: 2rem;
+  box-shadow: 0 2px 16px #0008;
+}
+
+.project-title {
+  font-size: 2rem;
+  margin: 0.5rem 0;
+}
+
+.project-desc {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
+/*─────────────────────────────────────────*/
+/* 4) Floating shapes background          */
+/*─────────────────────────────────────────*/
+.wrapper {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  display: flex;
+  background: linear-gradient(0deg, black, black);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.wrapper > div {
+  flex: 1;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+}
+
+.bg-item {
+  width: 50%;
+  aspect-ratio: 1;
+  background: transparent;
+  margin-bottom: 0;
+}
+
+.transItem {
+  fill: white;
+}
+
+/* shape animation */
+@keyframes shapeAnim {
+  0%   { transform: translateY(0) rotate(0deg) scale(1); opacity: 0; }
+  10%  { opacity: 1; }
+  50%  { opacity: 0.9; }
+  100% { transform: translateY(-110vh) rotate(720deg) scale(1.1); opacity: 0; }
+}
+
+.anim {
+  animation-name: shapeAnim;
+  animation-duration: 20s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.anim-0  { animation-delay:  0s; }
+.anim-1  { animation-delay:  2s; }
+.anim-2  { animation-delay:  4s; }
+.anim-3  { animation-delay:  6s; }
+.anim-4  { animation-delay:  8s; }
+.anim-5  { animation-delay: 10s; }
+.anim-6  { animation-delay: 12s; }
+.anim-7  { animation-delay: 14s; }
+.anim-8  { animation-delay: 16s; }
+.anim-9  { animation-delay: 18s; }
+.anim-10 { animation-delay: 20s; }
+.anim-11 { animation-delay: 22s; }
+.anim-12 { animation-delay: 24s; }
+.anim-13 { animation-delay: 26s; }
+.anim-14 { animation-delay: 28s; }
+
+/*─────────────────────────────────────────*/
+/* 5) Timeline: Hero bottom-up + static line */
+/*─────────────────────────────────────────*/
+.timeline-container {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.hero-line {
+  position: absolute;
+  bottom: 0;
+  left: var(--line-offset);
+  width: 2px;
+  height: 0;
+  background: var(--accent);
+  animation: grow-hero 1.2s ease-out forwards;
+  z-index: 3;
+}
+
+@keyframes grow-hero {
+  to { height: 50vh; }
+}
+
+.static-line {
+  position: absolute;
+  top: 0;
+  left: var(--line-offset);
+  width: 2px;
+  height: 100vh;
+  background: var(--accent);
+  opacity: 0.4;
+  z-index: 1;
+}
+
+.vertical-dot-global {
+  position: absolute;
+  left: calc(var(--line-offset) + 1px);
+  width: 14px; height: 14px;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 8px 2px #00ff4155;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  animation: dot-fade-in 0.3s 1.2s forwards;
+  z-index: 4;
+}
+
+@keyframes dot-fade-in {
+  to { opacity: 1; }
+}
+
+/*─────────────────────────────────────────*/
+/* 6) Responsive tweaks                    */
+/*─────────────────────────────────────────*/
+@media (max-width: 900px) {
+  section { padding-left: 2.4rem; }
+  .hero-content { margin-left: 3.4rem; }
+  .nav-links { gap: 1.5rem; }
+}
+
+@media (max-width: 600px) {
+  .hero-name { font-size: 1.3rem; }
+  section { padding-left: 1rem; }
+  .vertical-dot-global { left: calc(var(--line-offset) - 1px); }
+}

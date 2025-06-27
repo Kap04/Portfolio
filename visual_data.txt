@@ -1,0 +1,304 @@
+{
+  "designSystem": {
+    "name": "Minimalist Developer Portfolio",
+    "version": "1.0.0",
+    "theme": {
+      "primaryColors": {
+        "background": "#000000",
+        "accent": "#00FF41",
+        "text": "#FFFFFF",
+        "textSecondary": "#888888",
+        "shapes": "#444444"
+      },
+      "typography": {
+        "primaryFont": "monospace",
+        "fontSizes": {
+          "hero": "4rem",
+          "subtitle": "1.5rem",
+          "body": "1rem",
+          "caption": "0.875rem"
+        },
+        "fontWeights": {
+          "normal": 400,
+          "bold": 700
+        }
+      }
+    },
+    "layout": {
+      "structure": "single-page-scroll",
+      "sections": [
+        {
+          "name": "hero",
+          "height": "100vh",
+          "alignment": "left-center"
+        },
+        {
+          "name": "about",
+          "height": "100vh",
+          "alignment": "left-center"
+        },
+        {
+          "name": "projects",
+          "height": "100vh",
+          "alignment": "center"
+        },
+        {
+          "name": "contact",
+          "height": "100vh",
+          "alignment": "left-center"
+        }
+      ],
+      "navigation": {
+        "type": "top-horizontal",
+        "position": "fixed",
+        "items": ["Work", "Awards", "Projects", "Blog"],
+        "socialIcons": ["github", "linkedin", "email", "download"]
+      }
+    },
+    "backgroundElements": {
+      "persistentElements": {
+        "verticalLine": {
+          "type": "animated-line",
+          "position": "left",
+          "color": "#00FF41",
+          "width": "2px",
+          "animation": {
+            "type": "draw-from-bottom",
+            "duration": "2s",
+            "easing": "ease-out",
+            "trigger": "page-load"
+          }
+        },
+        "floatingShapes": {
+          "type": "geometric-particles",
+          "shapes": ["square", "circle", "triangle", "hexagon", "diamond"],
+          "count": 15,
+          "sizes": ["small", "medium", "large"],
+          "colors": ["#444444", "#555555", "#666666"],
+          "animation": {
+            "type": "continuous-float",
+            "direction": "bottom-to-top",
+            "speed": "slow",
+            "rotation": "random",
+            "opacity": "0.6-0.8",
+            "trigger": "page-load",
+            "delay": "staggered"
+          }
+        }
+      }
+    },
+    "sectionAnimations": {
+      "hero": {
+        "textElements": {
+          "username": {
+            "text": "whoami_",
+            "color": "#00FF41",
+            "fontSize": "1.5rem",
+            "animation": {
+              "type": "fade-in",
+              "delay": "0.5s",
+              "duration": "1s"
+            }
+          },
+          "name": {
+            "fontSize": "4rem",
+            "color": "#FFFFFF",
+            "animation": {
+              "type": "fade-in",
+              "delay": "1s",
+              "duration": "1s"
+            }
+          },
+          "subtitle": {
+            "fontSize": "1.5rem",
+            "color": "#888888",
+            "animation": {
+              "type": "fade-in",
+              "delay": "1.5s",
+              "duration": "1s"
+            }
+          }
+        },
+        "scrollBehavior": {
+          "type": "scroll-out-up",
+          "trigger": "scroll-threshold-25%"
+        }
+      },
+      "about": {
+        "textElements": {
+          "title": {
+            "text": "About Me",
+            "fontSize": "4rem",
+            "color": "#FFFFFF",
+            "animation": {
+              "type": "slide-in-from-bottom",
+              "trigger": "scroll-in-view",
+              "duration": "1s"
+            }
+          },
+          "subtitle": {
+            "fontSize": "1.2rem",
+            "color": "#888888",
+            "style": "italic",
+            "animation": {
+              "type": "fade-in",
+              "trigger": "scroll-in-view",
+              "delay": "0.3s",
+              "duration": "1s"
+            }
+          }
+        }
+      },
+      "projects": {
+        "layout": "center-aligned",
+        "textElements": {
+          "title": {
+            "text": "Crazy projects",
+            "fontSize": "3rem",
+            "color": "#FFFFFF"
+          },
+          "subtitle": {
+            "text": "& experiments",
+            "fontSize": "3rem",
+            "color": "#00FF41"
+          },
+          "projectName": {
+            "text": "_find_my_pixels_",
+            "fontSize": "2rem",
+            "color": "#FFFFFF",
+            "style": "monospace"
+          }
+        },
+        "decorativeElements": {
+          "conicalFlask": {
+            "type": "svg-illustration",
+            "position": "left-side",
+            "colors": {
+              "outline": "#FFFFFF",
+              "liquid": "#00FF41",
+              "accent": "#FFFF00"
+            },
+            "animation": {
+              "entrance": {
+                "type": "slide-in-from-left",
+                "trigger": "scroll-in-view",
+                "duration": "1.2s",
+                "easing": "ease-out"
+              },
+              "liquidWave": {
+                "type": "continuous-wave",
+                "amplitude": "small",
+                "frequency": "slow",
+                "delay": "entrance-complete"
+              }
+            }
+          },
+          "computerMonitor": {
+            "type": "svg-illustration",
+            "position": "center-right",
+            "style": "retro-computer",
+            "colors": {
+              "outline": "#FFFFFF",
+              "screen": "#000000",
+              "details": "#888888"
+            }
+          }
+        }
+      },
+      "contact": {
+        "textElements": {
+          "title": {
+            "text": "The End",
+            "fontSize": "4rem",
+            "color": "#FFFFFF"
+          },
+          "subtitle": {
+            "text": "Check out my blog!",
+            "fontSize": "1.5rem",
+            "color": "#FFFFFF"
+          }
+        },
+        "socialIcons": {
+          "style": "outline",
+          "color": "#FFFFFF",
+          "hoverColor": "#00FF41",
+          "size": "large",
+          "icons": ["github", "linkedin", "stack", "email", "download"]
+        }
+      }
+    },
+    "interactions": {
+      "scrollBehavior": {
+        "type": "smooth-scroll",
+        "snapToSections": true,
+        "scrollSpeed": "normal"
+      },
+      "hoverEffects": {
+        "navigationItems": {
+          "type": "color-change",
+          "hoverColor": "#00FF41",
+          "transition": "0.3s ease"
+        },
+        "socialIcons": {
+          "type": "scale-and-color",
+          "scale": "1.1",
+          "colorChange": "#00FF41",
+          "transition": "0.3s ease"
+        }
+      }
+    },
+    "responsiveBreakpoints": {
+      "mobile": "768px",
+      "tablet": "1024px",
+      "desktop": "1200px"
+    },
+    "animations": {
+      "globalSettings": {
+        "reducedMotion": "respect-user-preference",
+        "duration": "prefer-longer",
+        "easing": "ease-out"
+      },
+      "triggers": {
+        "pageLoad": "immediate",
+        "scrollInView": "intersection-observer-50%",
+        "scrollThreshold": "scroll-percentage-based"
+      }
+    },
+    "designPrinciples": {
+      "style": "minimalist-terminal",
+      "characteristics": [
+        "High contrast (black background, white text)",
+        "Monospace typography for technical feel",
+        "Bright green accent color (#00FF41) for highlights",
+        "Geometric floating background elements",
+        "Left-aligned content with breathing room",
+        "Smooth scroll-based section transitions",
+        "Persistent background elements throughout navigation",
+        "Custom SVG illustrations with thematic relevance",
+        "Terminal/console aesthetic with modern polish"
+      ],
+      "motionDesign": [
+        "Entrance animations from bottom/left",
+        "Continuous subtle floating animations",
+        "Smooth scroll-triggered content transitions",
+        "Staggered animation delays for visual hierarchy",
+        "Persistent background motion for depth",
+        "Custom liquid wave animations for decorative elements"
+      ]
+    },
+    "technicalImplementation": {
+      "recommendations": {
+        "scrollLibrary": "GSAP ScrollTrigger or Framer Motion",
+        "animationLibrary": "GSAP or CSS animations with Intersection Observer",
+        "particleSystem": "Custom CSS animations or Three.js for complex effects",
+        "svgAnimations": "SVG with CSS animations or GSAP",
+        "performanceOptimizations": [
+          "Use transform properties for animations",
+          "Implement will-change for animating elements",
+          "Lazy load non-critical animations",
+          "Use requestAnimationFrame for smooth motion"
+        ]
+      }
+    }
+  }
+}
