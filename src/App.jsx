@@ -96,25 +96,37 @@ function VerticalLine() {
     return () => tl.pause()
   }, [])
 
+  
   useEffect(() => {
+    const hero = document.getElementById('hero');
+    if (!hero || !topFillRef.current) return;
+  
+    const heroRect     = hero.getBoundingClientRect();
+    const heroTop      = heroRect.top + window.scrollY;
+    const heroCenterY  = heroTop + heroRect.height / 2;
+    const heroHalfH    = heroRect.height / 2;
+  
+    // Initialize: anchor at the dot, zero height
+    topFillRef.current.style.top    = `${heroCenterY}px`;
+    topFillRef.current.style.height = `0px`;
+  
     const handleScroll = () => {
-      const hero = document.getElementById('hero');
-      if (!hero || !topFillRef.current) return;
-
-      const rect = hero.getBoundingClientRect();
-      const scrollPast = -rect.top; // how far we've scrolled past top
-
-      const maxHeight = rect.height / 2; // match hero's half height
-      const fillHeight = Math.min(Math.max(scrollPast, 0), maxHeight);
-
-      topFillRef.current.style.height = `${fillHeight}px`;
+      const scrollPast = window.scrollY - heroTop;
+      // clamp between 0 and heroHalfH
+      const fillH = Math.max(0, Math.min(scrollPast, heroHalfH));
+  
+      // **grow upward**: new top = centerY - fillH
+      topFillRef.current.style.top    = `${heroCenterY - fillH}px`;
+      topFillRef.current.style.height = `${fillH}px`;
     };
-
+  
     window.addEventListener('scroll', handleScroll);
-    handleScroll(); // initial fill on mount
-
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+  
+  
+  
 
   return (
     <div className="vertical-line-container">
